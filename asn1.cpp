@@ -1,5 +1,5 @@
 /**
- *Name: Callie Walker
+ *Name: Callie Walker & Emma Smith 
  *Assignment: 1
  *Due 2/26/24
  *Purpose: The purpose of this program is to create a Circular Queue in C++
@@ -9,7 +9,9 @@
 
 class CircularQueue{
 
-  private:
+    
+
+    private:
 
       int First; //position for First/Front/Head
       int Last; //position for Last/Rear/tail
@@ -18,7 +20,7 @@ class CircularQueue{
       double* Items; //The actual items stored in the queue
 
 
-
+     public:
       CircularQueue(int N); //Allocates double array for N items, set Maximum capacity as N, and intialize First and Last
 
       ~CircularQueue(); // Destructor will deallocate the double array
