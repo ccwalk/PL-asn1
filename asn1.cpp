@@ -120,6 +120,10 @@ bool CircularQueue::isFull()
 
 int CircularQueue::size()
 {
+  if(First == -1 && Last == -1)
+  {
+     return 0;
+  }
   return (Last - First) + 1;
 }
 
@@ -129,7 +133,7 @@ int main()
   double item1 = 2.4;
   cq.enqueue(item1);
 
-  cout << cq.size() << "\n";
-  
+  cout << cq.size() << "\n"; 
+//  cout << "hi";
   return 0;
 }
