@@ -7,10 +7,13 @@
  *COMPILER: compiled using C++20
  */
 
-class CircularQueue{
 
-    
+#include <iostream>
+#include <float.h>
+using namespace std;
 
+class CircularQueue
+{
     private:
 
       int First; //position for First/Front/Head
@@ -33,14 +36,15 @@ class CircularQueue{
 
 };
 
-CircularQueue(int N)
+CircularQueue::CircularQueue(int N)
 {
-  head = NULL;
-  tail = NULL;
-  
+  Items = new double[N];
+  MaxCapacity = N; 
+  First = -1;
+  Last = -1;
 }
 
-~CircularQueue()
+CircularQueue::~CircularQueue()
 {
   while(!isEmpty())
   {
@@ -48,47 +52,84 @@ CircularQueue(int N)
   }
 }
 
-void enqueue(double newItem)
+void CircularQueue::enqueue(double newItem)
 {
-  if(!isFull())
+  if(isFull())
   {
     printf("Queue is full");
+    //return;?
   }
-  else if(front == -1 ) //isEmpty
+  else if(First == -1 ) //isEmpty
   {
-    first = 0;
-    rear = 0;
-    rear
+    First = 0;
+    Last = 0;
+    Items[0] = newItem;
   }
-  else if 
+  else if(Last == (size() - 1) && First != 0) //an Item was dequeued from the front
   {
-
+    Last = 0;
+    Items[Last] = newItem;
   }
-
- 
+  else
+  { 
+    Last++;
+    Items[Last] = newItem;
+  }
 }
 
-double dequeue()
+double CircularQueue::dequeue()
 {
+  if(isEmpty())
+  {
+    perror("queue is empty");
+    exit(-1);
+  }
+  else
+  {
+    double popped = Items[First];
+    Items[First] = -1.0;
   
+    if(First == Last)
+    {
+      First = -1;
+      Last  = -1;
+      return popped;
+    } 
+    else if(First != Last)
+    {
+      First++;
+      return popped;
+    }
+  }
+  exit(-1);
 }
 
-bool isEmpty()
+bool CircularQueue::isEmpty()
 {
-  CircularQueue cq;
-  return cq.size() == 0;
+  return size() == 0;
 }
 
-bool isFull()
+bool CircularQueue::isFull()
 {
-  if(first == 0 && last == MaxCapacity) //is ||(last +1 % size == first) neceessary
+  if(First == 0 && Last == MaxCapacity - 1) //is ||(last +1 % size == first) neceessary
   {
-    returb true;
+    return true;
   } 
   return false;
 }
 
-int size()
+int CircularQueue::size()
 {
+  return (Last - First) + 1;
+}
+
+int main()
+{
+  CircularQueue cq(4);
+  double item1 = 2.4;
+  cq.enqueue(item1);
+
+  cout << cq.size() << "\n";
   
+  return 0;
 }
