@@ -64,7 +64,6 @@ void CircularQueue::enqueue(double newItem)
   if(isFull())
   {
     printf("Queue is full");
-    //return;?
   }
   else if(First == -1 ) //isEmpty
   {
@@ -86,7 +85,7 @@ void CircularQueue::enqueue(double newItem)
 
 double CircularQueue::dequeue()
 {
-  if(isEmpty())
+  if(isEmpty()) 
   {
     perror("queue is empty");
     exit(-1);
@@ -95,13 +94,13 @@ double CircularQueue::dequeue()
   {
     double popped = Items[First];
   
-    if(First == Last)
+    if(First == Last) //queue is now empty after popping
     {
       First = -1;
       Last  = -1;
       return popped;
     } 
-    else if(First != Last)
+    else if(First != Last) //queue is not empty after pop
     {
       First++;
       return popped;
@@ -126,13 +125,13 @@ bool CircularQueue::isFull()
 
 int CircularQueue::size()
 {
-  if(First == -1 && Last == -1)
+  if(First == -1 && Last == -1) 
   {
      return 0;
   }
   return (Last - First) + 1;
 }
-
+//overloads == operator
 bool CircularQueue::operator==(CircularQueue q1)
 {
   if(this->size() != q1.size())
@@ -141,14 +140,14 @@ bool CircularQueue::operator==(CircularQueue q1)
   }
   for(int i = 0; i < this->size(); i++)
   {
-    if(this->Items[(First +i) % MaxCapacity] != q1.Items[(q1.First+i) % MaxCapacity])
+    if(this->Items[(First +i) % MaxCapacity] != q1.Items[(q1.First+i) % q1.MaxCapacity])
     {
       return false;
     }
   }
   return true;
 }
-
+//overloads addition operator
 CircularQueue CircularQueue::operator+(CircularQueue q2)
 {
   int sz1 = this->size();
@@ -184,7 +183,7 @@ CircularQueue CircularQueue::operator+(CircularQueue q2)
   return Result;
 
 }
-
+//overloads array access
 double CircularQueue::operator[](int index)
 {
   if(index == -1)
@@ -200,26 +199,29 @@ double CircularQueue::operator[](int index)
   return Items[First + index];
 
 }
-
+//overloads != operator
 bool CircularQueue::operator!=(CircularQueue q1)
 {
   return !(*this==q1);
 }
 
+//standard out overloading
 std::ostream& operator<<(ostream& o, CircularQueue q1)
 {
   for(int i = 0; i < q1.size(); i++)
   {
-    o << q1.Items[(q1.First + i) % q1.MaxCapacity] << ", ";
+    o << q1.Items[(q1.First + i) % q1.MaxCapacity] << ", "; 
   }
   return o;
 }
 
+//overloads << to enqueue
 void CircularQueue::operator<<(double a)
 {
   this->enqueue(a);
 }
 
+//overloads >> to dequeue
 void CircularQueue::operator>>(double* d)
 {
   *(d) =  this->dequeue();
