@@ -16,6 +16,6 @@
 
 (defun expo (u x list) (let ((N (length list))) (let ((result (* #C(0.0 1.0) (* -2 pi (/ (* u x) N))))) result)))
 
-(defun my-loop (list-r) (let ((sum 0) (list-f '())) (dotimes (u (- (length list-r) 1) list-f) (dotimes (x (- (length list-r) 1)) (setq sum (+ sum (* (nth x list-r) (exp (expo u x list-r)))))) (push sum list-f))))
+(defun my-loop (list-r) (let ((sum 0) (list-f '())) (dotimes (u (- (length list-r) 1) list-f) (dotimes (x (- (length list-r) 1)) (setq sum (+ sum (* (nth x list-r) (exp (round(realpart(expo u x list-r)))))))) (push sum list-f))))
 
 
