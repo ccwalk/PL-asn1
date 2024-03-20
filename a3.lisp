@@ -18,6 +18,11 @@
 
 (defun 2a (list-r) (let ((sum 0) (list-f '())) (dotimes (u (- (length list-r) 1) list-f) (dotimes (x (- (length list-r) 1)) (setq sum (+ sum (* (nth x list-r) (exp (round(realpart(expo u x list-r)))))))) (push sum list-f))))
 
+
+;;;Updated 2a 3/19
+
+    (defun 2a (list-r ) (let ((list-c '()) (N (length list-r))) (dotimes (n N list-c) (let ((sum #C(0.0 0.0))) (dotimes (k N) (setq sum (+ sum (* (nth k list-r) (exp (expo k n list-r)))))) (push sum list-c)))))
+
 ;;;Test
 
 (defvar list-r '(1 2 3 4))
@@ -29,9 +34,12 @@
 
 (defun 2b (list-c) (let ((sum 0) (list-r '())) (dotimes (x (length list-c) list-r) (let ((sum 0)) (dotimes (u (length list-c)) (setq sum (+ sum (* (nth x list-c) (exp (round(realpart(expoinv x u list-c)))))))) (push (/ sum (length list-c)) list-r)) list-r)))
 
+
+;;;Updated 3/19 2b 
+
+(defun 2b (list-c) (let ((sum 0) (list-r '())) (dotimes (x (length list-c) list-r) (let ((sum (* #C(0.0 0.0)))) (dotimes (u (length list-c)) (setq sum (+ sum (* (nth x list-c) (exp (round(realpart(expo-i x u list-c)))))))) (push (/ sum (length list-c)) list-r)) list-r)))
+
 ;;;Test
 
-(defvar list-c '(40 30 20 10))
- (let ((result (2b list-c)))
-  (format t "Result: ~a~%" result))
-
+(defvar list-c '(10 #C(-2.0 2.0 ) #C(-2.0 0.0) #C(-2.0 -2.0))) 
+ (let ((result (2b list-c)))                                                                   (format t "Result: ~a~%" result))   
